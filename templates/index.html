@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV Gudang Jadi</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/lens.png') }}">
+    <meta http-equiv="refresh" content="30"> <!-- Auto-refresh setiap 30 detik -->
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+    <style>
+        /* Ensure the body and html don't overflow */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal overflow */
+            background-color: rgb(65, 147, 177);
+        }
+
+        /* Constrain the video elements to fit within their containers */
+        .video-element {
+            height: 55vh; /* Set height to 50% of the viewport height */
+            object-fit: contain; /* Maintain aspect ratio without cropping */
+            display: block;
+            margin: auto;
+            overflow: hidden; /* Ensure the rounded corners are visible */
+            border-radius: 1rem; /* Add rounded corners */
+            border: 5px solid rgb(73, 123, 189);
+        }
+
+        /* Add some padding and center the title */
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h5 {
+            text-align: center;
+        }
+
+        /* Ensure the row doesn't overflow */
+        .row {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Add padding to the columns for spacing */
+        .col-sm {
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>CCTV Gudang Jadi</h2>
+        <div class="row">
+            <div class="col-sm">
+                <div>
+                    <h5>Camera 1</h5>
+                    <hr style="border-color: rgb(75, 75, 75); border-width: 3px;"/>
+                    <img class="video-element" id="video-1" src="/video_feed_1" alt="Camera Error">
+                    <div style="display: flex; justify-content: center; margin-top: 5px;">
+                        <button class="btn btn-outline-primary" onclick="toggleFullscreen('video-1')">Fullscreen</button>
+                    </div>
+                    <hr style="border-color: rgb(75, 75, 75); border-width: 2px;"/>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div>
+                    <h5>Camera 2</h5>
+                    <hr style="border-color: rgb(75, 75, 75); border-width: 3px;"/>
+                    <img class="video-element" id="video-2" src="/video_feed_2" alt="Camera Error">
+                    <div style="display: flex; justify-content: center; margin-top: 5px;">
+                        <button class="btn btn-outline-primary" onclick="toggleFullscreen('video-2')">Fullscreen</button>
+                    </div>
+                    <hr style="border-color: rgb(75, 75, 75); border-width: 2px;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Function to toggle fullscreen mode
+        function toggleFullscreen(videoId) {
+            const videoElement = document.getElementById(videoId);
+            if (!document.fullscreenElement) {
+                if (videoElement.requestFullscreen) {
+                    videoElement.requestFullscreen();
+                } else if (videoElement.mozRequestFullScreen) { // Firefox
+                    videoElement.mozRequestFullScreen();
+                } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+                    videoElement.webkitRequestFullscreen();
+                } else if (videoElement.msRequestFullscreen) { // IE/Edge
+                    videoElement.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { // Firefox
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { // Chrome, Safari, and Opera
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { // IE/Edge
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Add double-click event listeners for fullscreen
+        document.getElementById('video-1').addEventListener('dblclick', () => toggleFullscreen('video-1'));
+        document.getElementById('video-2').addEventListener('dblclick', () => toggleFullscreen('video-2'));
+    </script>
+</body>
+</html>
